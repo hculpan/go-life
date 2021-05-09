@@ -15,10 +15,12 @@ type GameOfLife struct {
 	BoardWidth  int
 	BoardHeight int
 
+	Cycle int
+
 	activeBoard *GameBoard
 	targetBoard *GameBoard
 
-	cycle int
+	livingRatio float32
 }
 
 var Game *GameOfLife
@@ -33,15 +35,9 @@ func NewGameOfLife(gameWidth, gameHeight int32, livingRatio float32) *GameOfLife
 
 	result.activeBoard = result.initalizeBoard()
 	result.targetBoard = result.initalizeBoard()
+	result.livingRatio = livingRatio
 
-	for x := 0; x < result.BoardWidth; x++ {
-		for y := 0; y < result.BoardHeight; y++ {
-			if livingRatio > rand.Float32() {
-				result.SetTargetBoardState(x, y, 1)
-			}
-		}
-	}
-	result.SwitchBoards()
+	result.Reset()
 
 	result.Initialize(gameWidth, gameHeight)
 
@@ -109,7 +105,7 @@ func (g GameOfLife) countNeighbors(x, y int) byte {
 }
 
 func (g *GameOfLife) Update() error {
-	g.cycle++
+	g.Cycle++
 
 	for x := 0; x < int(g.BoardWidth); x++ {
 		for y := 0; y < int(g.BoardHeight); y++ {
@@ -129,6 +125,23 @@ func (g *GameOfLife) Update() error {
 		}
 	}
 
+	g.SwitchBoards()
+
+	return nil
+}
+
+func (g *GameOfLife) Reset() error {
+	g.Cycle = 0
+
+	for x := 0; x < g.BoardWidth; x++ {
+		for y := 0; y < g.BoardHeight; y++ {
+			if g.livingRatio > rand.Float32() {
+				g.SetTargetBoardState(x, y, 1)
+			} else {
+				g.SetTargetBoardState(x, y, 0)
+			}
+		}
+	}
 	g.SwitchBoards()
 
 	return nil

@@ -5,16 +5,20 @@ import (
 	"github.com/hculpan/go-life/app/pages"
 	"github.com/hculpan/go-sdl-lib/component"
 	"github.com/hculpan/go-sdl-lib/game"
+	"github.com/veandco/go-sdl2/sdl"
 )
 
 type LifeGameController struct {
 	game.GameController
 }
 
-func NewLifeGameController(window *component.Window, game *model.GameOfLife) LifeGameController {
+func NewLifeGameController(gameWidth, gameHeight int32) LifeGameController {
 	result := LifeGameController{}
-	result.Game = game
-	result.Window = window
+
+	windowBackground := sdl.Color{R: 0, G: 0, B: 0, A: 0}
+
+	result.Game = model.NewGameOfLife(gameWidth, gameHeight, 0.1)
+	result.Window = component.NewWindow(gameWidth, gameHeight, "Conway's Game of Life", windowBackground)
 
 	result.RegisterPages()
 

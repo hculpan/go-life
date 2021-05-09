@@ -1,13 +1,18 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 
 	"github.com/hculpan/go-life/app/controllers"
-	"github.com/hculpan/go-life/app/model"
 	"github.com/hculpan/go-sdl-lib/component"
+	"github.com/hculpan/go-sdl-lib/resources"
 	"github.com/veandco/go-sdl2/sdl"
 )
+
+//go:embed resources/fonts/*
+
+var appFonts embed.FS
 
 func main() {
 	component.SetupSDL()
@@ -18,17 +23,23 @@ func main() {
 		return
 	}
 
+	if err := resources.FontsInit(appFonts); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	//	resources.Fonts.RegisterFont("HackBold-24", "resources/fonts/HackBold-Pdjd.ttf", 24)
+	resources.Fonts.RegisterFont("HackBold-24", "built-in-fonts/TruenoLight.otf", 24)
+
+	// Since our cells are all 3 pixels with a 1 pixel barrier
+	// around them, we want to make sure our widht/height is
+	// a divisor of 4
 	gameWidth := int32(float64(displayMode.W) * 0.75)
 	gameWidth += gameWidth % 4
 	gameHeight := int32(float64(displayMode.H) * 0.75)
 	gameHeight += gameWidth % 4
 
-	// TODO: Set to the desired default window background
-	windowBackground := sdl.Color{R: 255, G: 255, B: 255, A: 255}
-
-	game := model.NewGameOfLife(gameWidth, gameHeight, 0.1)
-	window := component.NewWindow(gameWidth, gameHeight, "GoSDL", windowBackground)
-	gamecontroller := controllers.NewLifeGameController(window, game)
+	gamecontroller := controllers.NewLifeGameController(gameWidth, gameHeight)
 	if err := gamecontroller.Run(); err != nil {
 		fmt.Println(err.Error())
 	}

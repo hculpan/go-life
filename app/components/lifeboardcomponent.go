@@ -31,8 +31,8 @@ func (c *LifeBoardComponent) DrawComponent(r *sdl.Renderer) error {
 	for x := 0; x < model.Game.BoardWidth; x++ {
 		for y := 0; y < model.Game.BoardHeight; y++ {
 			if model.Game.GetCurrentBoardState(x, y) > 0 {
-				rect.X = int32(x*4 + 1)
-				rect.Y = int32(y*4 + 1)
+				rect.X = int32(x*4+1) + c.X
+				rect.Y = int32(y*4+1) + c.Y
 				r.FillRect(&rect)
 			}
 		}
@@ -42,7 +42,7 @@ func (c *LifeBoardComponent) DrawComponent(r *sdl.Renderer) error {
 }
 
 func (c *LifeBoardComponent) Draw(r *sdl.Renderer) error {
-	if err := c.DrawWithChildren(r, c.DrawComponent); err != nil {
+	if err := component.DrawParentAndChildren(r, c); err != nil {
 		return err
 	}
 
