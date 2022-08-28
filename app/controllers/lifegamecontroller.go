@@ -17,8 +17,8 @@ func NewLifeGameController(gameWidth, gameHeight int32) LifeGameController {
 
 	windowBackground := sdl.Color{R: 0, G: 0, B: 0, A: 0}
 
-	result.Game = model.NewGameOfLife(gameWidth, gameHeight, 0.1)
 	result.Window = component.NewWindow(gameWidth, gameHeight, "Conway's Game of Life", windowBackground)
+	result.Game = model.NewGameOfLife(result.Window.Width, result.Window.Height, 0.1)
 
 	result.RegisterPages()
 

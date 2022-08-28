@@ -29,7 +29,7 @@ func main() {
 	}
 
 	//	resources.Fonts.RegisterFont("HackBold-24", "resources/fonts/HackBold-Pdjd.ttf", 24)
-	resources.Fonts.RegisterFont("HackBold-24", "built-in-fonts/TruenoLight.otf", 24)
+	resources.Fonts.RegisterFont("HackBold-48", "built-in-fonts/TruenoLight.otf", 48)
 
 	// Since our cells are all 3 pixels with a 1 pixel barrier
 	// around them, we want to make sure our widht/height is

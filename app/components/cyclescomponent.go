@@ -15,6 +15,7 @@ type CyclesComponent struct {
 
 func NewCyclesComponent(x, y, width, height int32) *CyclesComponent {
 	result := &CyclesComponent{}
+	result.Initialize()
 
 	result.SetPosition(x, y)
 	result.SetSize(width, height)
@@ -24,7 +25,7 @@ func NewCyclesComponent(x, y, width, height int32) *CyclesComponent {
 
 func (c *CyclesComponent) DrawComponent(r *sdl.Renderer) error {
 	msg := fmt.Sprintf("Cycle : %d", model.Game.Cycle)
-	text, err := resources.Fonts.CreateTexture(msg, sdl.Color{R: 50, G: 255, B: 50, A: 255}, "HackBold-24", r)
+	text, err := resources.Fonts.CreateTexture(msg, sdl.Color{R: 50, G: 255, B: 50, A: 255}, "HackBold-48", r)
 	if err != nil {
 		return err
 	}

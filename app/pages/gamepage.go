@@ -13,12 +13,13 @@ type GamePage struct {
 
 func NewGamePage(name string, x, y, width, height int32) *GamePage {
 	p := GamePage{}
+	p.Initialize()
 	p.Name = "GamePage"
 	p.SetPosition(0, 0)
 	p.SetSize(width, height)
 
-	p.AddChild(components.NewLifeBoardComponent(0, 40, width, height-40))
-	p.AddChild(components.NewHeaderComponent(0, 0, width, 40))
+	p.AddChild(components.NewLifeBoardComponent(0, 80, width, height-80))
+	p.AddChild(components.NewHeaderComponent(0, 0, width, 80))
 
 	return &p
 }

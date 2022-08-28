@@ -12,12 +12,13 @@ type HeaderComponent struct {
 
 func NewHeaderComponent(x, y, width, height int32) *HeaderComponent {
 	result := &HeaderComponent{}
+	result.Initialize()
 
 	result.SetPosition(x, y)
 	result.SetSize(width, height)
 
-	result.AddChild(NewCyclesComponent(x+5, y+5, 500, 30))
-	result.AddChild(component.NewButtonComponent(width-110, y+5, 100, 30,
+	result.AddChild(NewCyclesComponent(x+5, y+10, 500, 60))
+	result.AddChild(component.NewButtonComponent(width-220, y+10, 200, 60,
 		"Restart",
 		sdl.Color{R: 25, G: 25, B: 25, A: 255},
 		sdl.Color{R: 50, G: 255, B: 50, A: 255},

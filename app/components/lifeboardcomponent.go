@@ -12,6 +12,7 @@ type LifeBoardComponent struct {
 
 func NewLifeBoardComponent(x, y, width, height int32) *LifeBoardComponent {
 	result := &LifeBoardComponent{}
+	result.Initialize()
 
 	result.SetPosition(x, y)
 	result.SetSize(width, height)
